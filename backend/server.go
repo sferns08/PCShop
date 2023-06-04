@@ -2,24 +2,62 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
-func main() {
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-	// Cadena de conexión a la base de datos MySQL
-	connectionString := "root:admin@tcp(localhost:3306)/pcshop"
+// Estructuras
+type Cliente struct {
+	Nombre    string
+	Apellido  string
+	Direccion string
+	Telefono  string
+	Email     string
+	Fecha_nac time.Time
+}
+type Categoria struct {
+	IdCategoria int64
+	Nombre      string
+	Descripciom string
+}
+type Detalle struct {
+	IdDetalle int64
+	IdFactura int64
+	IdPrecio  int64
+	Cantidad  int64
+	Precio    float32
+}
 
-	// Abrir la conexión a la base de datos
-	db, err := sql.Open("mysql", connectionString)
-	if err != nil {
-		panic(err.Error())
-	}
-	defer db.Close()
-	//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+type Factura struct {
+	IdFactura int64
+	IdCliente int64
+	IdPago    int64
+	Fecha     time.Time
+}
+
+type Producto struct {
+	IdProducto  int64
+	IdCategoria int64
+	IdPago      int64
+	Nombre      string
+	Precio      float32
+	Stock       int64
+}
+
+type Pago struct {
+	IdPago int64
+	Nombre string
+}
+
+func main() {
+	//Conectamos consuta
+	dataBaseConn()
 	// Manejadores de ruta
 	http.HandleFunc("/", handleMain)
 	http.HandleFunc("/login", handleLogin)
@@ -89,10 +127,22 @@ func handleLogin(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// Manejador para la ruta /signin
+// ######### HANDLER SIGNIN #########
 func handleSignin(w http.ResponseWriter, r *http.Request) {
-	// Lógica para manejar la solicitud de /signin
-	fmt.Fprintf(w, "¡Bienvenido a la página de signin!")
+	if r.Method == "POST" { // Lógica para manejar POST requests
+		var user Cliente
+		body, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			log.Println("[Error Servidor] Error al leer el cuerpo de la petición (Función -- handlerSingIn(POST))")
+			return
+		}
+		err = json.Unmarshal(body, &user)
+		if err != nil {
+			log.Println("[Error Servidor] Error al parsear el cuerpo de la petición (Función -- handlerSingIn(POST))")
+			return
+		}
+		newUser(&user)
+	}
 }
 
 // Manejador para la ruta /inicio
@@ -105,4 +155,65 @@ func handleInicio(w http.ResponseWriter, r *http.Request) {
 func handleMain(w http.ResponseWriter, r *http.Request) {
 	// Lógica para manejar la solicitud de /main
 	fmt.Fprintf(w, "¡Bienvenido a la página main!")
+}
+
+// Conexion a la base de datos
+func dataBaseConn() {
+	log.Println("Conectando a la base de datos...")
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	rows, err := db.Query("SELECT * FROM categoria")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var id int
+		var nombre string
+		var descripcion string
+		err := rows.Scan(&id, &nombre, &descripcion)
+		if err != nil {
+			panic(err.Error())
+		}
+		log.Println(id, nombre, descripcion)
+	}
+
+	if err := rows.Err(); err != nil {
+		log.Println("Error al iterar filas:", err)
+		// Manejar el error según sea necesario
+	}
+	log.Println("Consulta finalizada.")
+
+}
+
+// Añade un usuario a la base de datos
+func newUser(usuario *Cliente) error {
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	log.Println("Intentando registrar: ", usuario.Fecha_nac)
+	count := 0 //Comprobamos si el elemento exite en la base de datos
+	err = db.QueryRow("SELECT COUNT(*) FROM Cliente WHERE email = ?", usuario.Email).Scan(&count)
+	if err != nil {
+		panic(err.Error())
+	}
+	if count == 0 { //Si no existe lo insertamos
+
+		stmt, err := db.Prepare("INSERT INTO Cliente ( Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac) VALUES (?,?,?,?,?,?)")
+		if err != nil {
+			panic(err.Error())
+		}
+		_, err = stmt.Exec(usuario.Nombre, usuario.Apellido, usuario.Direccion, usuario.Telefono, usuario.Email, usuario.Fecha_nac)
+		if err != nil {
+			panic(err.Error())
+		}
+		log.Println("Usuario registrado con exito:", usuario.Nombre)
+	}
+	return nil
 }

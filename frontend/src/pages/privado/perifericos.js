@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuLateral from "../components/MenuLateral";
+import MenuLateral from "../../components/MenuLateral";
 import {
   AppBar,
   Toolbar,
@@ -18,36 +18,35 @@ import {
 const products = [
   {
     id: 1,
-    name: 'LG 32LQ631C 32" LED FullHD HDR',
+    name: 'Logitech MK470 Slim Combo Teclado + Ratón Inalámbricos Blanco',
     description: 'Descripción del componente 1',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1065/10658868/1568-lg-32lq631c-32-led-fullhd-hdr.jpg',
-    price:470,
-    
+    image: 'https://thumb.pccomponentes.com/w-300-300/articles/32/320884/1176-logitech-mk470-slim-combo-teclado-raton-inalambricos-blanco.jpg',
+    price: 40.00,
   },
   {
     id: 2,
-    name: 'LG 43NANO766QA 43" LED NanoCell UltraHD 4K HDR10 Pro',
-    description: 'Descripción del componente 2',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1024/10241255/1424-lg-43nano766qa-43-led-nanocell-ultrahd-4k-hdr10-pro.jpg',
-    price:670.75,
+    name: 'Logitech MX Anywhere 3 Ratón Compacto Inalámbrico 4000DPI Grafito',
+    description: '',
+    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1063/10636723/1998-logitech-mx-anywhere-3-for-business-raton-inalambrico-4000dpi-grafito.jpg',
+    price: 23.45,
   },
   {
     id: 3,
-    name: 'LG 50UQ81003LB 50" LED UltraHD 4K HDR10 Pro',
+    name: 'Razer Kiyo X Webcam USB 1080P',
     description: 'Descripción del componente 3',
-    image: 'https://thumb.pccomponentes.com/w-530-530/articles/1062/10622660/1762-lg-50uq81003lb-50-led-ultrahd-4k-hdr10-pro.jpg',
-    price:980.70,
+    image: 'https://thumb.pccomponentes.com/w-530-530/articles/69/690202/1206-razer-kiyo-x-webcam-usb-1080p.jpg',
+    price: 26.75,
   },
 ];
 
-function Televisores() {
+function Perifericos() {
   return (
     <Box sx={{display:"flex"}}>
       <MenuLateral />
       <Box>
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>Televisores</Typography>
+        <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>Perifericos</Typography>
         <Button
             href="/inicioSesion"
             type="submit"
@@ -59,6 +58,7 @@ function Televisores() {
       </AppBar>
 
       <Container sx={{ marginTop: '2rem' }}>
+        
 
         <Grid container spacing={3}>
           {products.map((product) => (
@@ -67,7 +67,7 @@ function Televisores() {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    height="300"
+                    height="400"
                     image={product.image}
                     alt={product.name}
                   />
@@ -102,4 +102,4 @@ function Televisores() {
   );
 }
 
-export default Televisores;
+export default Perifericos;

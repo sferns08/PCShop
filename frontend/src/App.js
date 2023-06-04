@@ -1,18 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, Navigate, Routes, Route} from 'react-router-dom';
-//mport Login from './pages/login';
-import Inicio from './pages/inicioSesion';
-import Registro from './pages/registro';
-import Home from './pages/home';
-import Pago from './pages/pago';
-import Prueba from './pages/prueba';
-import Ordenadores from './pages/ordenadores';
-import Perifericos from './pages/perifericos';
-import Smartphones from './pages/smartphones';
-import Televisores from './pages/televisores';
-//import Nuevo from './pages/Nuevo';
-import MenuLateral from "./components/MenuLateral";
-import { ThemeProvider } from '@mui/material/styles';
+
+import Inicio from './pages/publico/inicioSesion';
+import Registro from './pages/publico/registro';
+import Home from './pages/privado/home';
+import Pago from './pages/privado/pago';
+import Prueba from './pages/privado/prueba';
+import Ordenadores from './pages/privado/ordenadores';
+import Perifericos from './pages/privado/perifericos';
+import Smartphones from './pages/privado/smartphones';
+import Televisores from './pages/privado/televisores';
+import PagoRealizado from './pages/privado/pagoRealizado';
 
 
 function App() {
@@ -29,6 +27,7 @@ function App() {
         <Route path='/perifericos' element={<Perifericos />}></Route>
         <Route path='/televisores' element={<Televisores />}></Route>
         <Route path='/smartphones' element={<Smartphones />}></Route>
+        <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
        
 
       </Routes>

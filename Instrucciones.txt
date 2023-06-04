@@ -1,0 +1,10 @@
+- Crear la base de datos con usuario: root y contraseña: admin a partir del archivo "PCShopBBDD.sql"
+- Tener instalado go-lang: https://go.dev/doc/install
+- Tener instalada la ultima version estable de nodejs: https://nodejs.org/es
+- Desde una terminal situada en la ubicacion de este archivo ejecutar: 
+  cd ./backend
+  go run ./backend/server.go
+- Desde otra terminal situada en la ubicacion de este archivo ejecutar:
+  cd ./frontend/
+  npm install
+  npm start

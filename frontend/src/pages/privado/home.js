@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuLateral from "../components/MenuLateral";
+import MenuLateral from '../../components/MenuLateral';
 import {
   AppBar,
   Toolbar,
@@ -11,7 +11,6 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Link,
   Box,
 } from '@mui/material';
 

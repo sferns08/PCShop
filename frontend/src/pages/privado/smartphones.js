@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuLateral from "../components/MenuLateral";
+import MenuLateral from "../../components/MenuLateral";
 import {
   AppBar,
   Toolbar,
@@ -11,42 +11,41 @@ import {
   CardContent,
   CardMedia,
   Button,
-  Link,
   Box,
 } from '@mui/material';
 
 const products = [
   {
     id: 1,
-    name: 'Logitech MK470 Slim Combo Teclado + Ratón Inalámbricos Blanco',
+    name: 'Xiaomi Redmi Note 11S 6/128GB Gris Libre',
     description: 'Descripción del componente 1',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/32/320884/1176-logitech-mk470-slim-combo-teclado-raton-inalambricos-blanco.jpg',
-    price: 40.00,
+    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1019/10190752/159-xiaomi-redmi-note-11s-6-128gb-gris-libre.jpg',
+    price:890,
   },
   {
     id: 2,
-    name: 'Logitech MX Anywhere 3 Ratón Compacto Inalámbrico 4000DPI Grafito',
-    description: '',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1063/10636723/1998-logitech-mx-anywhere-3-for-business-raton-inalambrico-4000dpi-grafito.jpg',
-    price: 23.45,
+    name: 'Samsung Galaxy M23 5G 4/128GB Azul Libre',
+    description: 'Descripción del componente 2',
+    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1018/10186126/1485-samsung-galaxy-m23-5g-4-128gb-azul-libre.jpg',
+    price:970,
   },
   {
     id: 3,
-    name: 'Razer Kiyo X Webcam USB 1080P',
+    name: 'POCO M4 5G 6/128GB Negro Libre',
     description: 'Descripción del componente 3',
-    image: 'https://thumb.pccomponentes.com/w-530-530/articles/69/690202/1206-razer-kiyo-x-webcam-usb-1080p.jpg',
-    price: 26.75,
+    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1058/10585049/1970-poco-m4-5g-6-128gb-negro-libre.jpg',
+    price:785,
   },
 ];
 
-function Perifericos() {
+function Smartphones() {
   return (
     <Box sx={{display:"flex"}}>
       <MenuLateral />
       <Box>
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>Perifericos</Typography>
+        <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>Smartphones</Typography>
         <Button
             href="/inicioSesion"
             type="submit"
@@ -58,7 +57,7 @@ function Perifericos() {
       </AppBar>
 
       <Container sx={{ marginTop: '2rem' }}>
-        
+    
 
         <Grid container spacing={3}>
           {products.map((product) => (
@@ -102,4 +101,4 @@ function Perifericos() {
   );
 }
 
-export default Perifericos;
+export default Smartphones;

@@ -70,7 +70,7 @@ function Pago() {
       <TextField label="Código de seguridad" fullWidth />
     </div>
         {/* Aquí irían los campos de entrada para los datos de la tarjeta */}
-        <PaymentButton variant="contained">Pagar</PaymentButton>
+        <PaymentButton variant="contained" href="/pagoRealizado">Pagar</PaymentButton>
       </ContentWrapper>
     </ContainerWrapper>
   );
