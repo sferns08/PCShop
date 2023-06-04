@@ -3,7 +3,7 @@ package main
 import (
 	modelos "backend/Modelos"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 )
@@ -15,7 +15,7 @@ func handlerSignIn(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		var cliente modelos.Cliente
 
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			log.Println("[Error Servidor] Error al leer el cuerpo de la petición (Función -- handlerSingIn(POST))")
 			return
@@ -37,7 +37,7 @@ func handlerSignUp(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		var cliente modelos.Cliente
 
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("[Error Servidor] Error al leer el cuerpo de la petición (Función -- handlerSignUp(POST))"))

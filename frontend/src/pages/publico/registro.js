@@ -1,24 +1,23 @@
-import * as React from 'react';
-import { useNavigate} from 'react-router-dom';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import axios from 'axios';
+import * as React from "react";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import axios from "axios";
 
 function Registro() {
   const [selectedDate, setSelectedDate] = React.useState(null);
-  const navigate = useNavigate();
+  const [aviso, setAviso] = React.useState(false);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -29,30 +28,34 @@ function Registro() {
     const data = new FormData(event.currentTarget);
 
     const fecha = new Date(selectedDate);
-    console.log(fecha);
 
     const formData = {
-      Nombre: data.get('firstName'),
-      Apellido: data.get('lastName'),
-      Direccion: data.get('direccion'),
-      Telefono: data.get('telefonoNum'),
-      Email: data.get('email'),
+      Nombre: data.get("Nombre"),
+      Apellido: data.get("Apellidos"),
+      Direccion: data.get("Direccion"),
       Fecha_nac: fecha,
+      Telefono: data.get("Telefono"),
+      Email: data.get("Email"),
+      Password: data.get("Password"),
     };
 
+    // Verificar si hay campos requeridos sin completar
+    if (Object.values(formData).some((value) => value === "" || value === null)) {
+      setAviso(true);
+      return;
+    }
+
     try {
-      if(data.get('firstName') != null && data.get('lastName') != null && data.get('telefonoNum') != null && data.get('email')!= null ){
-        const response = await axios.post('http://127.0.0.1:8080/signin', formData, {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        console.log('Respuesta del servidor:', response.data);
-        navigate('/inicioSesion');
-      }else throw new Error('Datos incompletos');  
+      const response = await axios.post("http://127.0.0.1:8080/signUp", formData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      alert(response.data);
+
     } catch (error) {
-      console.error('Error al enviar los datos:', error);
-      alert('Hubo un error al registrar. Por favor, intenta nuevamente.');
+      alert("Hubo un error al registrar. Por favor, intenta nuevamente.");
     }
   };
 
@@ -63,12 +66,12 @@ function Registro() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -79,10 +82,9 @@ function Registro() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="Nombre"
                   required
                   fullWidth
-                  id="firstName"
                   label="Nombre"
                   autoFocus
                 />
@@ -91,42 +93,32 @@ function Registro() {
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
                   label="Apellidos"
-                  name="lastName"
+                  name="Apellidos"
                   autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email"
-                  name="email"
-                  autoComplete="email"
-                />
+                <TextField required fullWidth label="Email" name="Email" autoComplete="email" />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
+                  name="Password"
                   label="Password"
                   type="password"
-                  id="password"
                   autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth name="direccion" label="Dirección" id="direccion" />
+                <TextField required fullWidth name="Direccion" label="Dirección" />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name="telefonoNum"
+                  name="Telefono"
                   required
                   fullWidth
-                  id="telefono"
                   label="Número teléfono"
                   autoFocus
                 />
@@ -137,6 +129,11 @@ function Registro() {
                 </LocalizationProvider>
               </Grid>
             </Grid>
+            {aviso && (
+              <Typography variant="body2" color="error" sx={{ mt: 1 }}>
+                Por favor, completa todos los campos requeridos.
+              </Typography>
+            )}
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
               Regístrate
             </Button>

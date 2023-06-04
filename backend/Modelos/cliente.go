@@ -9,9 +9,10 @@ type Cliente struct {
 	Nombre    string
 	Apellido  string
 	Direccion string
+	Fecha_nac time.Time
 	Telefono  string
 	Email     string
-	Fecha_nac time.Time
+	Password  string
 }
 
 // Inserta un cliente en la bdd
@@ -30,13 +31,13 @@ func (c *Cliente) InsertarCliente() (string, error) {
 	// En caso de que no exista en la bdd lo añadimos
 	if c.ExisteCliente() == 0 {
 
-		stmt, err := db.Prepare("INSERT INTO Cliente (Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac) VALUES (?, ?, ?, ?, ?, ?)")
+		stmt, err := db.Prepare("INSERT INTO Cliente (Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac, Password) VALUES (?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
 			return "", err
 		}
 		defer stmt.Close()
 
-		_, err = stmt.Exec(c.Nombre, c.Apellido, c.Direccion, c.Telefono, c.Email, c.Fecha_nac)
+		_, err = stmt.Exec(c.Nombre, c.Apellido, c.Direccion, c.Telefono, c.Email, c.Fecha_nac, c.Password)
 		if err != nil {
 			return "", err
 		}
@@ -61,7 +62,7 @@ func (c *Cliente) ExisteCliente() int {
 
 	// Buscamos si el cliente existe en la base de datos por su email
 	count := 0
-	err = db.QueryRow("SELECT COUNT(*) FROM Cliente WHERE email = ?", c.Email).Scan(&count)
+	err = db.QueryRow("SELECT COUNT(*) FROM Cliente WHERE Email = ?", c.Email).Scan(&count)
 	if err != nil {
 		panic(err.Error())
 	}

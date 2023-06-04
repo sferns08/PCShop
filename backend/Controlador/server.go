@@ -21,7 +21,7 @@ func main() {
 
 	//Habilitamos las cors
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:8001", "http://localhost:8080"},
+		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization", "Custom-Header", "Cookie"},
 		AllowCredentials: true,
@@ -29,6 +29,6 @@ func main() {
 	handler := c.Handler(mux)
 
 	//Lanzamos el servidor
+	log.Println("Servidor en ejecución en http://localhost", port)
 	http.ListenAndServe(port, handler)
-	log.Println("Servidor en ejecución en http://localhost:", port)
 }
