@@ -1,5 +1,4 @@
-import React from 'react';
-import MenuLateral from "../../components/MenuLateral";
+import React from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,53 +11,52 @@ import {
   CardMedia,
   Button,
   Box,
-} from '@mui/material';
+} from "@mui/material";
+import MenuSuperior from "../../components/menuSuperior";
 
 const products = [
   {
     id: 1,
-    name: 'Xiaomi Redmi Note 11S 6/128GB Gris Libre',
-    description: 'Descripción del componente 1',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1019/10190752/159-xiaomi-redmi-note-11s-6-128gb-gris-libre.jpg',
-    price:890,
+    name: "Xiaomi Redmi Note 11S 6/128GB Gris Libre",
+    description: "Descripción del componente 1",
+    image:
+      "https://thumb.pccomponentes.com/w-300-300/articles/1019/10190752/159-xiaomi-redmi-note-11s-6-128gb-gris-libre.jpg",
+    price: 890,
   },
   {
     id: 2,
-    name: 'Samsung Galaxy M23 5G 4/128GB Azul Libre',
-    description: 'Descripción del componente 2',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1018/10186126/1485-samsung-galaxy-m23-5g-4-128gb-azul-libre.jpg',
-    price:970,
+    name: "Samsung Galaxy M23 5G 4/128GB Azul Libre",
+    description: "Descripción del componente 2",
+    image:
+      "https://thumb.pccomponentes.com/w-300-300/articles/1018/10186126/1485-samsung-galaxy-m23-5g-4-128gb-azul-libre.jpg",
+    price: 970,
   },
   {
     id: 3,
-    name: 'POCO M4 5G 6/128GB Negro Libre',
-    description: 'Descripción del componente 3',
-    image: 'https://thumb.pccomponentes.com/w-300-300/articles/1058/10585049/1970-poco-m4-5g-6-128gb-negro-libre.jpg',
-    price:785,
+    name: "POCO M4 5G 6/128GB Negro Libre",
+    description: "Descripción del componente 3",
+    image:
+      "https://thumb.pccomponentes.com/w-300-300/articles/1058/10585049/1970-poco-m4-5g-6-128gb-negro-libre.jpg",
+    price: 785,
   },
 ];
 
 function Smartphones() {
   return (
-    <Box sx={{display:"flex"}}>
-      <MenuLateral />
-      <Box>
+    <Box>
       <AppBar position="static">
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>Smartphones</Typography>
-        <Button
-            href="/inicioSesion"
-            type="submit"
-            variant="contained"
-          >
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Typography variant="h3" sx={{ flexGrow: 1, textAlign: "center" }}>
+            Smartphones
+          </Typography>
+          <Button href="/inicioSesion" type="submit" variant="contained">
             Volver al Inicio
-        </Button>
+          </Button>
         </Toolbar>
       </AppBar>
+      <MenuSuperior />
 
-      <Container sx={{ marginTop: '2rem' }}>
-    
-
+      <Container sx={{ marginTop: "2rem" }}>
         <Grid container spacing={3}>
           {products.map((product) => (
             <Grid item key={product.id} xs={12} sm={6} md={4}>
@@ -83,20 +81,19 @@ function Smartphones() {
                   </CardContent>
                 </CardActionArea>
                 <Button
-                href="/pago"
-                type="submit"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
-              >
-                Comprar
-              </Button>
+                  href="/pago"
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Comprar
+                </Button>
               </Card>
             </Grid>
           ))}
         </Grid>
       </Container>
-    </Box>
     </Box>
   );
 }

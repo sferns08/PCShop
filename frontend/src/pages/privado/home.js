@@ -1,5 +1,4 @@
 import React from 'react';
-import MenuLateral from '../../components/MenuLateral';
 import {
   AppBar,
   Toolbar,
@@ -13,6 +12,7 @@ import {
   Button,
   Box,
 } from '@mui/material';
+import MenuSuperior from "../../components/menuSuperior";
 
 const products = [
   {
@@ -40,22 +40,14 @@ const products = [
 
 function Home() {
   return (
-    <Box sx={{display:"flex"}}>
-      <MenuLateral />
-      <Box>
+    <Box>
       <AppBar position="static">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
-        <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>PCShop</Typography>
-        <Button
-            href="/inicioSesion"
-            type="submit"
-            variant="contained"
-          >
-            Volver al Inicio
-        </Button>
+          <Typography variant="h3" sx={{ flexGrow: 1, textAlign: 'center' }}>PCShop</Typography>
+          <Button href="/inicioSesion" type="submit" variant="contained">Volver al Inicio</Button>
         </Toolbar>
       </AppBar>
-
+      <MenuSuperior />
       <Container sx={{ marginTop: '2rem' }}>
         <Typography variant="h4" sx={{ marginBottom: '2rem' }}>
           Productos Destacados
@@ -98,7 +90,6 @@ function Home() {
           ))}
         </Grid>
       </Container>
-      </Box>
     </Box>
   );
 }
