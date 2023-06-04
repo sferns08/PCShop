@@ -54,9 +54,9 @@ export default function DataLook() {
 
   const [temp, setTemp] = useState(0);
   const [humidity, setHumidity] = useState(0);
-  const [light, setLight] = useState(0);
+  const [light, ] = useState(0);
   const [soil_moisture, setSoil_moisture] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [, setSeconds] = useState(0);
   const [showGraph, setShowGraph] = useState(false);
 
 
