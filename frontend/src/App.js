@@ -10,11 +10,13 @@ import Perifericos from './pages/privado/perifericos';
 import Smartphones from './pages/privado/smartphones';
 import Televisores from './pages/privado/televisores';
 import PagoRealizado from './pages/privado/pagoRealizado';
+import LoginChecker from './servidor/loginChecker';
 
 
 function App() {
   return (
-    <><Router>
+    <Router>
+      <LoginChecker />
       <Routes>
         <Route path='/' element={<Navigate to='/inicioSesion' />}></Route>
         <Route path='/inicioSesion' element={<Inicio />}></Route>
@@ -26,10 +28,8 @@ function App() {
         <Route path='/televisores' element={<Televisores />}></Route>
         <Route path='/smartphones' element={<Smartphones />}></Route>
         <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
-       
-
       </Routes>
-    </Router></>
+    </Router>
   );
 }
 

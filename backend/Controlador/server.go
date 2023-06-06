@@ -23,12 +23,16 @@ func main() {
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
-		AllowedHeaders:   []string{"Content-Type", "Authorization", "Custom-Header", "Cookie"},
+		AllowedHeaders:   []string{"Content-Type", "Authorization", "Custom-Header", "Cookie", "categoria"},
 		AllowCredentials: true,
 	})
 	handler := c.Handler(mux)
 
 	//Lanzamos el servidor
 	log.Println("Servidor en ejecución en http://localhost", port)
-	http.ListenAndServe(port, handler)
+	err := http.ListenAndServe(port, handler)
+	if err != nil {
+		log.Println("Ha habido uno error: ", err)
+	}
+
 }

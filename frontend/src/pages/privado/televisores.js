@@ -12,36 +12,43 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import MenuSuperior from "../../components/menuSuperior";
 
-const products = [
-  {
-    id: 1,
-    name: 'LG 32LQ631C 32" LED FullHD HDR',
-    description: "Descripción del componente 1",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/1065/10658868/1568-lg-32lq631c-32-led-fullhd-hdr.jpg",
-    price: 470,
-  },
-  {
-    id: 2,
-    name: 'LG 43NANO766QA 43" LED NanoCell UltraHD 4K HDR10 Pro',
-    description: "Descripción del componente 2",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/1024/10241255/1424-lg-43nano766qa-43-led-nanocell-ultrahd-4k-hdr10-pro.jpg",
-    price: 670.75,
-  },
-  {
-    id: 3,
-    name: 'LG 50UQ81003LB 50" LED UltraHD 4K HDR10 Pro',
-    description: "Descripción del componente 3",
-    image:
-      "https://thumb.pccomponentes.com/w-530-530/articles/1062/10622660/1762-lg-50uq81003lb-50-led-ultrahd-4k-hdr10-pro.jpg",
-    price: 980.7,
-  },
-];
 
 function Televisores() {
+
+  const [dispositivos, setDispositivos] = useState([]);
+
+  useEffect(() => {
+    getDispositivos();
+  }, []);
+
+  const getDispositivos = async () => {
+    try {
+      document.cookie = "categoria=2";
+      const response = await axios.get(`http://127.0.0.1:3000/home`, {
+        withCredentials: true,
+      });
+      console.log("Informacion de la respuesta", response.data);
+      if (response.data != null) {
+        setDispositivos(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Reemplazar products con dispositivos
+  const products = dispositivos.map((dispositivo) => ({
+    id: dispositivo.IdProducto,
+    categoria: dispositivo.IdCategoria,
+    name: dispositivo.Nombre,
+    image: dispositivo.image,
+    price: dispositivo.price,
+  }));
+
   return (
     <Box>
       <AppBar position="static">

@@ -6,6 +6,7 @@ import (
 )
 
 type Cliente struct {
+	IdCliente int
 	Nombre    string
 	Apellido  string
 	Direccion string
@@ -15,7 +16,7 @@ type Cliente struct {
 	Password  string
 }
 
-// Inserta un cliente en la bdd
+// Inserta un cliente en la bdd y devuelve si se registra o ya existe
 func (c *Cliente) InsertarCliente() (string, error) {
 
 	// Establecemos conexión con la base de datos
@@ -68,4 +69,23 @@ func (c *Cliente) ExisteCliente() int {
 	}
 
 	return count
+}
+
+// Si esta bien logeado devuelve el id del usuario sino 0
+func (c *Cliente) LogearCliente() (int32, error) {
+
+	// Establecemos conexión con la base de datos
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		return -1, err
+	}
+	defer db.Close()
+
+	// Si existe en base de datos devuelve su id
+	var index int32 = 0
+	err = db.QueryRow("SELECT IdCliente FROM cliente WHERE Email = ? AND Password = ?", c.Email, c.Password).Scan(&index)
+	if err != nil {
+		return -1, err
+	}
+	return index, nil
 }

@@ -5,7 +5,6 @@ import HomeIcon from '@mui/icons-material/Home';
 import ComputerIcon from '@mui/icons-material/Computer';
 import MouseIcon from '@mui/icons-material/Mouse';
 import SmartphoneIcon from '@mui/icons-material/Smartphone';
-import ClearIcon from '@mui/icons-material/Clear';
 import LiveTvIcon from '@mui/icons-material/LiveTv';
 
 export default function MenuSuperior() {
@@ -18,7 +17,6 @@ export default function MenuSuperior() {
       <BottomNavigationAction href="/smartphones" label="Smartphones" icon={<SmartphoneIcon />} />
       <BottomNavigationAction href="/perifericos" label="perifericos" icon={<MouseIcon />} />
       <BottomNavigationAction href="/televisores" label="TV" icon={<LiveTvIcon />} />
-      <BottomNavigationAction href="/inicioSesion" label="Salir" icon={<ClearIcon />} />
     </BottomNavigation>
   );
 }
