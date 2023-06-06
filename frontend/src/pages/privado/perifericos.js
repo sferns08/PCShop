@@ -13,35 +13,42 @@ import {
   Box,
 } from "@mui/material";
 import MenuSuperior from "../../components/menuSuperior";
-
-const products = [
-  {
-    id: 1,
-    name: "Logitech MK470 Slim Combo Teclado + Ratón Inalámbricos Blanco",
-    description: "Descripción del componente 1",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/32/320884/1176-logitech-mk470-slim-combo-teclado-raton-inalambricos-blanco.jpg",
-    price: 40.0,
-  },
-  {
-    id: 2,
-    name: "Logitech MX Anywhere 3 Ratón Compacto Inalámbrico 4000DPI Grafito",
-    description: "",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/1063/10636723/1998-logitech-mx-anywhere-3-for-business-raton-inalambrico-4000dpi-grafito.jpg",
-    price: 23.45,
-  },
-  {
-    id: 3,
-    name: "Razer Kiyo X Webcam USB 1080P",
-    description: "Descripción del componente 3",
-    image:
-      "https://thumb.pccomponentes.com/w-530-530/articles/69/690202/1206-razer-kiyo-x-webcam-usb-1080p.jpg",
-    price: 26.75,
-  },
-];
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function Perifericos() {
+  const [dispositivos, setDispositivos] = useState([]);
+
+  useEffect(() => {
+    getDispositivos();
+  }, []);
+
+  const getDispositivos = async () => {
+    try {
+      const now = new Date();
+      const expires = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+      document.cookie = `categoria=2; expires=${expires.toUTCString()}; path=/`;
+
+      const response = await axios.get(`http://127.0.0.1:8080/home/2`, {
+        withCredentials: true,
+      });
+      console.log("Informacion de la respuesta: ", response.data);
+      if (response.data != null) {
+        setDispositivos(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Reemplazar products con dispositivos
+  const products = dispositivos.map((dispositivo) => ({
+    id: dispositivo.IdProducto,
+    categoria: dispositivo.IdCategoria,
+    name: dispositivo.Nombre,
+    image: dispositivo.Imagen,
+    price: dispositivo.Precio,
+  }));
   return (
     <Box>
       <AppBar position="static">

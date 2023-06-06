@@ -13,35 +13,43 @@ import {
   Box,
 } from "@mui/material";
 import MenuSuperior from "../../components/menuSuperior";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const products = [
-  {
-    id: 1,
-    name: "Xiaomi Redmi Note 11S 6/128GB Gris Libre",
-    description: "Descripción del componente 1",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/1019/10190752/159-xiaomi-redmi-note-11s-6-128gb-gris-libre.jpg",
-    price: 890,
-  },
-  {
-    id: 2,
-    name: "Samsung Galaxy M23 5G 4/128GB Azul Libre",
-    description: "Descripción del componente 2",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/1018/10186126/1485-samsung-galaxy-m23-5g-4-128gb-azul-libre.jpg",
-    price: 970,
-  },
-  {
-    id: 3,
-    name: "POCO M4 5G 6/128GB Negro Libre",
-    description: "Descripción del componente 3",
-    image:
-      "https://thumb.pccomponentes.com/w-300-300/articles/1058/10585049/1970-poco-m4-5g-6-128gb-negro-libre.jpg",
-    price: 785,
-  },
-];
 
 function Smartphones() {
+  const [dispositivos, setDispositivos] = useState([]);
+
+  useEffect(() => {
+    getDispositivos();
+  }, []);
+
+  const getDispositivos = async () => {
+    try {
+      const now = new Date();
+      const expires = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+      document.cookie = `categoria=2; expires=${expires.toUTCString()}; path=/`;
+
+      const response = await axios.get(`http://127.0.0.1:8080/home/1`, {
+        withCredentials: true,
+      });
+      console.log("Informacion de la respuesta: ", response.data);
+      if (response.data != null) {
+        setDispositivos(response.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Reemplazar products con dispositivos
+  const products = dispositivos.map((dispositivo) => ({
+    id: dispositivo.IdProducto,
+    categoria: dispositivo.IdCategoria,
+    name: dispositivo.Nombre,
+    image: dispositivo.Imagen,
+    price: dispositivo.Precio,
+  }));
   return (
     <Box>
       <AppBar position="static">

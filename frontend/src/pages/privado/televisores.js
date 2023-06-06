@@ -27,11 +27,14 @@ function Televisores() {
 
   const getDispositivos = async () => {
     try {
-      document.cookie = "categoria=2";
-      const response = await axios.get(`http://127.0.0.1:3000/home`, {
+      const now = new Date();
+      const expires = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
+      document.cookie = `categoria=2; expires=${expires.toUTCString()}; path=/`;
+
+      const response = await axios.get(`http://127.0.0.1:8080/home/4`, {
         withCredentials: true,
       });
-      console.log("Informacion de la respuesta", response.data);
+      console.log("Informacion de la respuesta: ", response.data);
       if (response.data != null) {
         setDispositivos(response.data);
       }
@@ -45,8 +48,8 @@ function Televisores() {
     id: dispositivo.IdProducto,
     categoria: dispositivo.IdCategoria,
     name: dispositivo.Nombre,
-    image: dispositivo.image,
-    price: dispositivo.price,
+    image: dispositivo.Imagen,
+    price: dispositivo.Precio,
   }));
 
   return (

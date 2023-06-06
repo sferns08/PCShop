@@ -11,10 +11,10 @@ const LoginChecker = () => {
           if (cookieExpiration) {
             const currentTime = new Date();
             if (currentTime > cookieExpiration) {
-              navigate("/inicioSesion");
+              //navigate("/inicioSesion");
             }
           } else {
-            navigate('/inicioSesion');
+            //navigate('/inicioSesion');
           }
         };
         checkCookieExpiration();

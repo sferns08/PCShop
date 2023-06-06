@@ -1,6 +1,8 @@
 package modelos
 
-import "database/sql"
+import (
+	"database/sql"
+)
 
 type Producto struct {
 	IdProducto  int32
@@ -11,7 +13,7 @@ type Producto struct {
 	Imagen      string
 }
 
-func (p *Producto) GetProductos(categoria int32) (result []Producto) {
+func (p *Producto) GetProductos(categoria int) (result []Producto) {
 
 	// Conectamos con la base de datos
 	db, err := sql.Open("mysql", "root:admin@/pcshop")
@@ -19,7 +21,6 @@ func (p *Producto) GetProductos(categoria int32) (result []Producto) {
 		panic(err.Error())
 	}
 	defer db.Close()
-
 	var rows *sql.Rows
 	rows, err = db.Query("SELECT * FROM producto WHERE IdCategoria = ?", categoria)
 	if err != nil {

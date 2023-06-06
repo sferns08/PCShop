@@ -49,7 +49,7 @@ func handlerSignIn(w http.ResponseWriter, r *http.Request) {
 
 			//Se crea la cookie y se almacena
 			valor := string(index)
-			expiresAt := time.Now().Add(300 * time.Second)
+			expiresAt := time.Now().Add(5 * time.Second)
 			cookie := http.Cookie{
 				Name:     "jwt",
 				Value:    valor,
@@ -111,22 +111,13 @@ func handlerSignUp(w http.ResponseWriter, r *http.Request) {
 func handlerHome(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		var producto modelos.Producto
-		cookie, err := r.Cookie("categoria")
-		if err != nil {
-			log.Println(w, "[Error Servidor] Error al obtener la cookie (Función -- handlerHome(GET))")
-			return
-		}
-		valorNumerico, _ := strconv.Atoi(cookie.Value)
-		id := int32(valorNumerico)
-		log.Println("La categoria a la que se hace get es: ", id)
+		valorNumerico := r.URL.Path[len("/home/"):]
+		id, _ := strconv.Atoi(valorNumerico)
 		res := producto.GetProductos(id)
 		data, err := json.Marshal(res)
 		if err != nil {
 			log.Println("[Error Servidor] Fallo al crear el json (Función -- handlerUser(GET))")
 		}
-		r.Header.Add("Access-Control-Allow-Origin", "http://localhost:3000")
-		r.Header.Add("Access-Control-Allow-Credentials", "true")
-		log.Print(res)
 		w.Write(data)
 	}
 }

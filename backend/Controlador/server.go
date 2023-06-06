@@ -17,7 +17,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/signIn", handlerSignIn)
 	mux.HandleFunc("/signUp", handlerSignUp)
-	mux.HandleFunc("/home", handlerHome)
+	mux.HandleFunc("/home/", handlerHome)
 
 	//Habilitamos las cors
 	c := cors.New(cors.Options{
