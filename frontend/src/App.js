@@ -8,7 +8,7 @@ import Pago from './pages/privado/pago';
 import Ordenadores from './pages/privado/ordenadores';
 import Perifericos from './pages/privado/perifericos';
 import Smartphones from './pages/privado/smartphones';
-import Televisores from './pages/privado/televisores';
+import Televisores from './pages/privado/productos';
 import PagoRealizado from './pages/privado/pagoRealizado';
 import LoginChecker from './servidor/loginChecker';
 
