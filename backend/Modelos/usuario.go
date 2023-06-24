@@ -41,7 +41,7 @@ func (u *Usuario) InsertarUsuario() (string, error) {
 			panic(err.Error())
 		}
 
-		respuesta = "Usuario registrado con éxito: " + u.Nombre
+		respuesta = "Usuario registrado con éxito: " + u.Email
 	} else {
 		respuesta = "Ese email ya existe."
 	}
@@ -69,13 +69,13 @@ func (u *Usuario) ExisteUsuario() int {
 	return count
 }
 
-// Si esta bien logeado devuelve el id del usuario sino 0
-func (u *Usuario) LogearUsuario() (int32, error) {
+// Si esta bien logeado devuelve el id del usuario sino 0 en caso de error -1
+func (u *Usuario) LogearUsuario() int32 {
 
 	// Establecemos conexión con la base de datos
 	db, err := sql.Open("mysql", "root:admin@/pcshop")
 	if err != nil {
-		return -1, err
+		return -1
 	}
 	defer db.Close()
 
@@ -83,7 +83,7 @@ func (u *Usuario) LogearUsuario() (int32, error) {
 	var index int32 = 0
 	err = db.QueryRow("SELECT IdUsuario FROM usuario WHERE Email = ? AND Password = ?", u.Email, u.Password).Scan(&index)
 	if err != nil {
-		return -1, err
+		return -1
 	}
-	return index, nil
+	return index
 }

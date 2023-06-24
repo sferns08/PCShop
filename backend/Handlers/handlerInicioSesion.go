@@ -30,16 +30,15 @@ func HandlerInicioSesion(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Loggea al cliente
-		index, err := usuario.LogearUsuario()
-		if err != nil {
+		index := usuario.LogearUsuario()
+		if index == -1 {
 			http.Error(w, "[Error Servidor] Error al loggearse (Función -- handlerInicioSesion(POST))", http.StatusBadRequest)
 			return
 		}
 
-		var data string
 		// Si está bien loggeado
-		if index != 0 {
-
+		var data string
+		if index > 0 {
 			//Se crea la cookie y se almacena
 			valor := string(index)
 			expiresAt := time.Now().Add(5 * time.Second)
