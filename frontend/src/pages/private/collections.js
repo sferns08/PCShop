@@ -12,45 +12,15 @@ import {
   Button,
   Box,
 } from "@mui/material";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import MenuSuperior from "../../components/menuSuperior";
+import { useProducts } from "../../hooks/useProducts";
 
 
-function Televisores() {
+function Collections() {
+  const {products, getProducts, deleteProduct, addProduct} = useProducts();
 
-  const [dispositivos, setDispositivos] = useState([]);
-
-  useEffect(() => {
-    getDispositivos();
-  }, []);
-
-  const getDispositivos = async () => {
-    try {
-      const now = new Date();
-      const expires = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate());
-      document.cookie = `categoria=2; expires=${expires.toUTCString()}; path=/`;
-
-      const response = await axios.get(`http://127.0.0.1:8080/home/4`, {
-        withCredentials: true,
-      });
-      console.log("Informacion de la respuesta: ", response.data);
-      if (response.data != null) {
-        setDispositivos(response.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  // Reemplazar products con dispositivos
-  const products = dispositivos.map((dispositivo) => ({
-    id: dispositivo.IdProducto,
-    categoria: dispositivo.IdCategoria,
-    name: dispositivo.Nombre,
-    image: dispositivo.Imagen,
-    price: dispositivo.Precio,
-  }));
+  useEffect(() => {getProducts(1)}, []);
 
   return (
     <Box>
@@ -69,24 +39,21 @@ function Televisores() {
       <Container sx={{ marginTop: "2rem" }}>
         <Grid container spacing={3}>
           {products.map((product) => (
-            <Grid item key={product.id} xs={12} sm={6} md={4}>
+            <Grid item key={product} xs={12} sm={6} md={4}>
               <Card>
                 <CardActionArea>
                   <CardMedia
                     component="img"
                     height="300"
-                    image={product.image}
-                    alt={product.name}
+                    image={product.Imagen}
+                    alt={product.Nombre}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {product.description}
+                      {product.Nombre}
                     </Typography>
                     <Typography variant="h4" color="red">
-                      {product.price} €
+                      {product.Precio} €
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -108,4 +75,4 @@ function Televisores() {
   );
 }
 
-export default Televisores;
+export default Collections;

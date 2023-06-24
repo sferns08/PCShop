@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import ordenadorInicio from "../../img/ordenadorInicio.webp";
+import ordenadorInicio from "../../img/login.webp";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

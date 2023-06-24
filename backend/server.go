@@ -1,6 +1,7 @@
 package main
 
 import (
+	manejadoras "backend/Handlers"
 	"log"
 	"net/http"
 
@@ -15,9 +16,9 @@ func main() {
 
 	//Creamos un multiplexor de manejadoras
 	mux := http.NewServeMux()
-	mux.HandleFunc("/signIn", handlerSignIn)
-	mux.HandleFunc("/signUp", handlerSignUp)
-	mux.HandleFunc("/home/", handlerHome)
+	mux.HandleFunc("/signIn", manejadoras.HandlerSignIn)
+	mux.HandleFunc("/signUp", manejadoras.HandlerSignUp)
+	mux.HandleFunc("/home/", manejadoras.HandlerHome)
 
 	//Habilitamos las cors
 	c := cors.New(cors.Options{

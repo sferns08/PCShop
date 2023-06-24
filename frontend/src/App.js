@@ -1,27 +1,26 @@
 import React from 'react';
 import { BrowserRouter as Router, Navigate, Routes, Route} from 'react-router-dom';
-
-import Inicio from './pages/publico/inicioSesion';
-import Registro from './pages/publico/registro';
-import Home from './pages/privado/home';
-import Pago from './pages/privado/pago';
-import Productos from './pages/privado/productos';
-import PagoRealizado from './pages/privado/pagoRealizado';
-import LoginChecker from './servidor/loginChecker';
-
+import SignIn from './pages/public/signIn';
+import SignUp from './pages/public/signUp';
+import Home from './pages/private/home';
+import Colections from './pages/private/collections';
+import Pago from './pages/private/pago';
+import PagoRealizado from './pages/private/pagoRealizado';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
   return (
     <Router>
-      <LoginChecker />
       <Routes>
         <Route path='/' element={<Navigate to='/inicioSesion' />}></Route>
-        <Route path='/inicioSesion' element={<Inicio />}></Route>
-        <Route path='/registro' element={<Registro />}></Route>
-        <Route path='/home' element={<Home />}></Route>
-        <Route path='/pago' element={<Pago />}></Route>
-        <Route path='/productos' element={<Productos />}></Route>
-        <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
+        <Route path='/inicioSesion' element={<SignIn />}></Route>
+        <Route path='/registro' element={<SignUp />}></Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path='/home' element={<Home />}></Route>
+          <Route path='/pago' element={<Pago />}></Route>
+          <Route path='/productos' element={<Colections />}></Route>
+          <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
+        </Route>
       </Routes>
     </Router>
   );
