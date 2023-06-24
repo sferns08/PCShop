@@ -13,15 +13,15 @@ import {
   Box,
 } from '@mui/material';
 import MenuSuperior from "../../components/menuSuperior";
-import { useProducts } from "../../hooks/useProducts";
-import { useEffect} from "react";
+import { useProductos } from "../../hooks/useProductos";
+import { useEffect} from "react"; 
 
 
-function Home() {
+export default function Inicio() {
 
-  const {products, getProducts, deleteProduct, addProduct} = useProducts();
+  const {productos, getProductos} = useProductos();
 
-  useEffect(() => {getProducts(1)}, []);
+  useEffect(() => {getProductos(1)}, []);
 
   return (
     <Box>
@@ -38,7 +38,7 @@ function Home() {
         </Typography>
 
         <Grid container spacing={3}>
-          {products.map((product) => (
+          {productos.map((product) => (
             <Grid item key={product.IdProducto} xs={12} sm={6} md={4}>
               <Card>
                 <CardActionArea>
@@ -74,5 +74,3 @@ function Home() {
     </Box>
   );
 }
-
-export default Home;

@@ -16,9 +16,9 @@ func main() {
 
 	//Creamos un multiplexor de manejadoras
 	mux := http.NewServeMux()
-	mux.HandleFunc("/signIn", manejadoras.HandlerSignIn)
-	mux.HandleFunc("/signUp", manejadoras.HandlerSignUp)
-	mux.HandleFunc("/home/", manejadoras.HandlerHome)
+	mux.HandleFunc("/usuarios/", manejadoras.HandlerUsuarios)
+	mux.HandleFunc("/inicioSesion/", manejadoras.HandlerInicioSesion)
+	mux.HandleFunc("/inicio/", manejadoras.HandlerInicio)
 
 	//Habilitamos las cors
 	c := cors.New(cors.Options{

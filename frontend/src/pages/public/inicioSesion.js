@@ -10,8 +10,8 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import ordenadorInicio from "../../img/login.webp";
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { IniciarSesion } from '../../hooks/useServidor';
 
 export default function InicioSesion() {
   
@@ -20,29 +20,8 @@ export default function InicioSesion() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
-    const formData = {
-      Email: data.get("Email"),
-      Password: data.get("Password"),
-    };
-
-    try {
-      const response = await axios.post("http://127.0.0.1:8080/signIn", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      
-      if(response.data === 0){
-        alert("Datos de inicio de sesión incorrectos");
-      }else{
-        document.cookie = response.data;
-        navigate("/home")
-      }
-    } catch (error) {
-      alert("Hubo un error al iniciar sesión. Por favor, intenta nuevamente.");
-    }
-  };
+    IniciarSesion(data, navigate);
+  };    
 
   return (
     <Grid container component="main" sx={{ height: '100vh' }}>

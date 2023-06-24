@@ -13,11 +13,12 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import axios from "axios";
+import { useUsuarios } from "../../hooks/useUsuarios";
 
 function Registro() {
   const [selectedDate, setSelectedDate] = React.useState(null);
   const [aviso, setAviso] = React.useState(false);
+  const {addUsuario} = useUsuarios();
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -26,36 +27,17 @@ function Registro() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
     const fecha = new Date(selectedDate);
-
-    const formData = {
-      Nombre: data.get("Nombre"),
-      Apellido: data.get("Apellidos"),
-      Direccion: data.get("Direccion"),
-      Fecha_nac: fecha,
-      Telefono: data.get("Telefono"),
-      Email: data.get("Email"),
-      Password: data.get("Password"),
-    };
-
     // Verificar si hay campos requeridos sin completar
-    if (Object.values(formData).some((value) => value === "" || value === null)) {
+    const values = Array.from(data.values());
+    if (values.some((value) => value === "" || value === null)) {
       setAviso(true);
+      setTimeout(() => {
+        setAviso(false);
+      }, 2000);
       return;
-    }
-
-    try {
-      const response = await axios.post("http://127.0.0.1:8080/signUp", formData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      alert(response.data);
-
-    } catch (error) {
-      alert("Hubo un error al registrar. Por favor, intenta nuevamente.");
+    }else{
+      addUsuario(data,fecha);
     }
   };
 

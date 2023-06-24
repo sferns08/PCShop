@@ -9,7 +9,7 @@ import (
 )
 
 // ######### HOME #########
-func HandlerHome(w http.ResponseWriter, r *http.Request) {
+func HandlerInicio(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		var producto modelos.Producto
 		valorNumerico := r.URL.Path[len("/home/"):]

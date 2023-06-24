@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-type Cliente struct {
-	IdCliente int
+type Usuario struct {
+	IdUsuario int
 	Nombre    string
 	Apellido  string
 	Direccion string
@@ -17,42 +17,40 @@ type Cliente struct {
 }
 
 // Inserta un cliente en la bdd y devuelve si se registra o ya existe
-func (c *Cliente) InsertarCliente() (string, error) {
+func (u *Usuario) InsertarUsuario() (string, error) {
 
-	// Establecemos conexión con la base de datos
+	// Conexión a la bdd
 	db, err := sql.Open("mysql", "root:admin@/pcshop")
 	if err != nil {
-		return "", err
+		panic(err.Error())
 	}
 	defer db.Close()
 
-	// Mensaje de respuesta
-	var texto string
-
 	// En caso de que no exista en la bdd lo añadimos
-	if c.ExisteCliente() == 0 {
+	var respuesta string
+	if u.ExisteUsuario() == 0 {
 
-		stmt, err := db.Prepare("INSERT INTO Cliente (Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac, Password) VALUES (?, ?, ?, ?, ?, ?, ?)")
+		stmt, err := db.Prepare("INSERT INTO Usuario (Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac, Password) VALUES (?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
-			return "", err
+			panic(err.Error())
 		}
 		defer stmt.Close()
 
-		_, err = stmt.Exec(c.Nombre, c.Apellido, c.Direccion, c.Telefono, c.Email, c.Fecha_nac, c.Password)
+		_, err = stmt.Exec(u.Nombre, u.Apellido, u.Direccion, u.Telefono, u.Email, u.Fecha_nac, u.Password)
 		if err != nil {
-			return "", err
+			panic(err.Error())
 		}
 
-		texto = "Usuario registrado con éxito: " + c.Nombre
+		respuesta = "Usuario registrado con éxito: " + u.Nombre
 	} else {
-		texto = "Ese email ya existe."
+		respuesta = "Ese email ya existe."
 	}
 
-	return texto, nil
+	return respuesta, nil
 }
 
-// Si existe el cliente devuelve 1, sino 0
-func (c *Cliente) ExisteCliente() int {
+// Si existe el usuario devuelve 1, sino 0
+func (u *Usuario) ExisteUsuario() int {
 
 	// Establecemos conexión con la base de datos
 	db, err := sql.Open("mysql", "root:admin@/pcshop")
@@ -61,9 +59,9 @@ func (c *Cliente) ExisteCliente() int {
 	}
 	defer db.Close()
 
-	// Buscamos si el cliente existe en la base de datos por su email
+	// Buscamos si el usuario existe en la base de datos por su email
 	count := 0
-	err = db.QueryRow("SELECT COUNT(*) FROM Cliente WHERE Email = ?", c.Email).Scan(&count)
+	err = db.QueryRow("SELECT COUNT(*) FROM Usuario WHERE Email = ?", u.Email).Scan(&count)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -72,7 +70,7 @@ func (c *Cliente) ExisteCliente() int {
 }
 
 // Si esta bien logeado devuelve el id del usuario sino 0
-func (c *Cliente) LogearCliente() (int32, error) {
+func (u *Usuario) LogearUsuario() (int32, error) {
 
 	// Establecemos conexión con la base de datos
 	db, err := sql.Open("mysql", "root:admin@/pcshop")
@@ -83,7 +81,7 @@ func (c *Cliente) LogearCliente() (int32, error) {
 
 	// Si existe en base de datos devuelve su id
 	var index int32 = 0
-	err = db.QueryRow("SELECT IdCliente FROM cliente WHERE Email = ? AND Password = ?", c.Email, c.Password).Scan(&index)
+	err = db.QueryRow("SELECT IdUsuario FROM usuario WHERE Email = ? AND Password = ?", u.Email, u.Password).Scan(&index)
 	if err != nil {
 		return -1, err
 	}

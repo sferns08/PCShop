@@ -12,7 +12,7 @@ export default function MenuSuperior() {
 
   return (
     <BottomNavigation showLabels value={value} onChange={(event, newValue) => { setValue(newValue);}}>
-      <BottomNavigationAction href="/home" label="Inicio" value="Inicio" icon={<HomeIcon />} />
+      <BottomNavigationAction href="/inicio" label="Inicio" value="Inicio" icon={<HomeIcon />} />
       <BottomNavigationAction href="/productos" label="Ordenadores" icon={<ComputerIcon />} />
       <BottomNavigationAction href="/productos" label="Smartphones" icon={<SmartphoneIcon />} />
       <BottomNavigationAction href="/productos" label="Perifericos" icon={<MouseIcon />} />

@@ -14,13 +14,13 @@ import {
 } from "@mui/material";
 import { useEffect} from "react";
 import MenuSuperior from "../../components/menuSuperior";
-import { useProducts } from "../../hooks/useProducts";
+import { useProductos } from "../../hooks/useProductos";
 
+export default function Productos() {
+  
+  const {productos, getProductos} = useProductos();
 
-function Collections() {
-  const {products, getProducts, deleteProduct, addProduct} = useProducts();
-
-  useEffect(() => {getProducts(1)}, []);
+  useEffect(() => {getProductos(1)}, []);
 
   return (
     <Box>
@@ -38,7 +38,7 @@ function Collections() {
 
       <Container sx={{ marginTop: "2rem" }}>
         <Grid container spacing={3}>
-          {products.map((product) => (
+          {productos.map((product) => (
             <Grid item key={product} xs={12} sm={6} md={4}>
               <Card>
                 <CardActionArea>
@@ -74,5 +74,3 @@ function Collections() {
     </Box>
   );
 }
-
-export default Collections;

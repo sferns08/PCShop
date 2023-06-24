@@ -1,24 +1,24 @@
 import { Outlet, useNavigate } from "react-router";
-import SignIn from "./pages/public/signIn";
+import InicioSesion from "./pages/public/inicioSesion";
 import { useEffect } from "react";
 
-const useAuth = () => {
+const useAutenticacion = () => {
   const cookies = document.cookie.split(';');
   const jwtCookie = cookies.find(cookie => cookie.trim().startsWith('jwt='));
   return Boolean(jwtCookie);    
 };
 
-const ProtectedRoute = () => {
-  const isAuth = useAuth();
+const RutaProtegida = () => {
+  const isAut = useAutenticacion();
   const navigate = useNavigate();
   
   useEffect(() => {
-    if (!isAuth) {
-      navigate('/signIn');
+    if (!isAut) {
+      navigate('/inicioSesion');
     }
-  }, [isAuth, navigate]);
+  }, [isAut, navigate]);
   
-  return isAuth ? <Outlet/> : <SignIn />;
+  return isAut ? <Outlet/> : <InicioSesion />;
 };
 
-export default ProtectedRoute;
+export default RutaProtegida;

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 
-export const useProducts = () =>{
-    const [products, setProducts] = useState([]);
+export const useProductos = () =>{
+    const [productos, setProductos] = useState([]);
 
-    const addProduct = async (data) => {
+    const addProducto = async (data) => {
         axios.post("http://127.0.0.1:8080/products/",{
             IdCategoria: data.get('categoria'),
             Nombre: data.get('nombre'),
@@ -24,7 +24,7 @@ export const useProducts = () =>{
     }
 
     // Obtiene los productos de la categoria indicada 
-    const getProducts = async (idCategoria) => {
+    const getProductos = async (idCategoria) => {
         try {
             const response = await axios.get(`http://127.0.0.1:8080/products/${idCategoria}`, {
                 withCredentials: true,
@@ -33,32 +33,32 @@ export const useProducts = () =>{
             // Si todo va bien
             console.log("Informacion de la respuesta: ", response.data);
             if (response.data != null) {
-                setProducts(response.data);
+                setProductos(response.data);
             }
         } catch (error) {
             console.log(error);
         }
     };
   
-    const deleteProduct = async (indice) => {
+    const deleteProducto = async (indice) => {
         console.log(indice);
         try {
             const response = await axios.delete(`http://127.0.0.1:8080/products/${indice}`,{});
             console.log(response.data);
-            const updatedProducts = products.filter(
+            const updatedProductos = productos.filter(
                 (product) => product.IdProducto !== indice
             );
-            setProducts(updatedProducts);
+            setProductos(updatedProductos);
         } catch (error) {
             console.error(error);
         }
     }
   
     return{
-      products,
-      addProduct,
-      deleteProduct,
-      getProducts
+      productos,
+      addProducto,
+      deleteProducto,
+      getProductos
     }
   
 }
