@@ -13,10 +13,10 @@ export default function MenuSuperior() {
   return (
     <BottomNavigation showLabels value={value} onChange={(event, newValue) => { setValue(newValue);}}>
       <BottomNavigationAction href="/inicio" label="Inicio" value="Inicio" icon={<HomeIcon />} />
-      <BottomNavigationAction href="/productos" label="Ordenadores" icon={<ComputerIcon />} />
-      <BottomNavigationAction href="/productos" label="Smartphones" icon={<SmartphoneIcon />} />
-      <BottomNavigationAction href="/productos" label="Perifericos" icon={<MouseIcon />} />
-      <BottomNavigationAction href="/productos" label="TV" icon={<LiveTvIcon />} />
+      <BottomNavigationAction href="/productos/1" label="Smartphones" icon={<SmartphoneIcon />} />
+      <BottomNavigationAction href="/productos/2" label="Perifericos" icon={<MouseIcon />} />
+      <BottomNavigationAction href="/productos/3" label="Ordenadores" icon={<ComputerIcon />} />
+      <BottomNavigationAction href="/productos/4" label="TV" icon={<LiveTvIcon />} />
     </BottomNavigation>
   );
 }

@@ -18,7 +18,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/usuarios/", manejadoras.HandlerUsuarios)
 	mux.HandleFunc("/inicioSesion/", manejadoras.HandlerInicioSesion)
-	mux.HandleFunc("/inicio/", manejadoras.HandlerInicio)
+	mux.HandleFunc("/productos/", manejadoras.HandlerProductos)
 
 	//Habilitamos las cors
 	c := cors.New(cors.Options{

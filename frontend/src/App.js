@@ -17,7 +17,7 @@ function App() {
         <Route path='/registro' element={<Registro />}></Route>
         <Route element={<RutaProtegida />}>
           <Route path='/inicio' element={<Inicio />}></Route>
-          <Route path='/productos' element={<Productos />}></Route>
+          <Route path='/productos/:id' element={<Productos />}></Route>
           <Route path='/pago' element={<Pago />}></Route>
           <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
         </Route>

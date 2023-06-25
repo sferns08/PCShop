@@ -24,7 +24,7 @@ function PagoRealizado() {
       <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '16px' }}>
         <Typography>PAGO REALIZADO, MUCHAS GRACIAS POR SU COMPRA</Typography>
       <Button
-        href="/home"
+        href="/inicio"
         type="submit"
         variant="contained"
       >

@@ -41,7 +41,7 @@ func HandlerInicioSesion(w http.ResponseWriter, r *http.Request) {
 		if index > 0 {
 			//Se crea la cookie y se almacena
 			valor := string(index)
-			expiresAt := time.Now().Add(5 * time.Second)
+			expiresAt := time.Now().Add(3600 * time.Second)
 			cookie := http.Cookie{
 				Name:     "jwt",
 				Value:    valor,

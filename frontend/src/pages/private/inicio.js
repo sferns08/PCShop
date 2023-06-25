@@ -21,7 +21,7 @@ export default function Inicio() {
 
   const {productos, getProductos} = useProductos();
 
-  useEffect(() => {getProductos(1)}, []);
+  useEffect(() => {getProductos(0)}, []);
 
   return (
     <Box>

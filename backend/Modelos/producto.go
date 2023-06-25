@@ -13,6 +13,7 @@ type Producto struct {
 	Imagen      string
 }
 
+// Obtiene los productos de la categoria indicada, si es 0 devuelve todos
 func (p *Producto) GetProductos(categoria int) (result []Producto) {
 
 	// Conectamos con la base de datos
@@ -22,7 +23,11 @@ func (p *Producto) GetProductos(categoria int) (result []Producto) {
 	}
 	defer db.Close()
 	var rows *sql.Rows
-	rows, err = db.Query("SELECT * FROM producto WHERE IdCategoria = ?", categoria)
+	if categoria == 0 {
+		rows, err = db.Query("SELECT * FROM producto")
+	} else {
+		rows, err = db.Query("SELECT * FROM producto WHERE IdCategoria = ?", categoria)
+	}
 	if err != nil {
 		panic(err.Error())
 	}

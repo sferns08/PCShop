@@ -42,7 +42,7 @@ function Pago() {
       <ContentWrapper>
       <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '16px' }}>
       <Button
-        href="/home"
+        href="/inicio"
         type="submit"
         variant="contained"
       >
