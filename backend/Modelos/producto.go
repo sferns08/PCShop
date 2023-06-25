@@ -2,6 +2,8 @@ package modelos
 
 import (
 	"database/sql"
+	"log"
+	"strconv"
 )
 
 type Producto struct {
@@ -58,4 +60,82 @@ func (p *Producto) GetProductos(categoria int) (result []Producto) {
 		panic(err.Error())
 	}
 	return result
+}
+
+func (p *Producto) InsertarProducto() (string, error) {
+
+	// Conexión a la bdd
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	// En caso de que no exista en la bdd lo añadimos
+	var respuesta string
+	if p.ExisteProducto() == 0 {
+
+		stmt, err := db.Prepare("INSERT INTO producto (IdCategoria, Nombre, Precio, Stock, Imagen) VALUES (?, ?, ?, ?, ?)")
+		if err != nil {
+			panic(err.Error())
+		}
+		defer stmt.Close()
+
+		_, err = stmt.Exec(p.IdCategoria, p.Nombre, p.Precio, p.Stock, p.Imagen)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		respuesta = "Producto registrado con éxito: " + p.Nombre
+	} else {
+		// Actualizamos el stock del producto existente
+		_, err := db.Exec("UPDATE producto SET Stock = Stock + ? WHERE Nombre = ?", p.Stock, p.Nombre)
+		if err != nil {
+			panic(err.Error())
+		}
+		respuesta = "Añadido stock al producto con exito: " + strconv.Itoa(int(p.Stock))
+	}
+
+	return respuesta, nil
+}
+
+// Si existe el email devuelve 1, sino 0
+func (p *Producto) ExisteProducto() int {
+
+	// Establecemos conexión con la base de datos
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	// Buscamos si el producto existe en la base de datos por su nombre
+	count := 0
+	err = db.QueryRow("SELECT COUNT(*) FROM producto WHERE nombre = ? AND IdCategoria = ?", p.Nombre, p.IdCategoria).Scan(&count)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return count
+}
+
+// Eliminar un producto
+func (p *Producto) DeleteProducto() error {
+
+	// Conexión a la bdd
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	// Eliminación del producto
+	_, err = db.Exec("DELETE FROM producto WHERE IdProducto = ?", p.IdProducto)
+	if err != nil {
+		log.Println("[Error Servidor] Error al preparar la petición (Función -- deleteProducto())")
+		return err
+	}
+	log.Println("Se ha eliminado correctamente el dispositivo: ", p.IdProducto)
+
+	return nil
 }

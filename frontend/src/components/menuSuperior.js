@@ -26,7 +26,7 @@ export default function MenuSuperior() {
       <BottomNavigationAction href="/productos/3" label="Ordenadores" icon={<ComputerIcon />} />
       <BottomNavigationAction href="/productos/4" label="TV" icon={<LiveTvIcon />} />
       <BottomNavigationAction href="/productos/4" label="Mis Pedidos" icon={<LocalShippingIcon />} />
-      {cookie === "1" && <BottomNavigationAction href="/productos/4" label="Subir producto" icon={<AddIcon />} />}
+      {cookie === "1" && <BottomNavigationAction href="/nuevoProducto" label="Subir producto" icon={<AddIcon />} />}
     </BottomNavigation>
   );
 }

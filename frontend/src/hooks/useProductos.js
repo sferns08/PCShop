@@ -5,11 +5,18 @@ export const useProductos = () =>{
     const [productos, setProductos] = useState([]);
 
     const addProducto = async (data) => {
+        console.log("Insertando: ",
+            "IdCategoria: ",data.get('categoria'),
+            "Nombre: ",data.get('nombre'),
+            "Precio: ",data.get('precio'),
+            "Stock: ",data.get('stock'),
+            "Imagen: ", data.get('imagen')
+        );
         axios.post("http://127.0.0.1:8080/productos/",{
-            IdCategoria: data.get('categoria'),
+            IdCategoria: parseInt(data.get('categoria')),
             Nombre: data.get('nombre'),
-            Precio: data.get('precio'),
-            Stock: data.get('stock'),
+            Precio: parseFloat(data.get('precio')),
+            Stock: parseInt(data.get('stock')),
             Imagen: data.get('imagen')
         },{
             headers: {

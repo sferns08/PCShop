@@ -5,6 +5,7 @@ import Registro from './pages/public/registro';
 import Productos from './pages/private/productos';
 import Pago from './pages/private/pago';
 import PagoRealizado from './pages/private/pagoRealizado';
+import NuevoProducto from './pages/private/nuevoProducto';
 import RutaProtegida from './RutaProtegida';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path='/registro' element={<Registro />}></Route>
         <Route element={<RutaProtegida />}>
           <Route path='/productos/:id' element={<Productos />}></Route>
+          <Route path='/nuevoProducto' element={<NuevoProducto />}></Route>
           <Route path='/pago' element={<Pago />}></Route>
           <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
         </Route>

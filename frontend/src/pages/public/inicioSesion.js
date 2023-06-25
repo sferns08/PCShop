@@ -17,7 +17,7 @@ export default function InicioSesion() {
   
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     IniciarSesion(data, navigate);
