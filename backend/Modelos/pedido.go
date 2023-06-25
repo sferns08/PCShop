@@ -1,7 +1,7 @@
 package modelos
 
-type Detalle struct {
-	IdDetalle int64
+type Pedido struct {
+	IdPedido  int64
 	IdFactura int64
 	IdPrecio  int64
 	Cantidad  int64

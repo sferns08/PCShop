@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -40,11 +41,10 @@ func HandlerInicioSesion(w http.ResponseWriter, r *http.Request) {
 		var data string
 		if index > 0 {
 			//Se crea la cookie y se almacena
-			valor := string(index)
 			expiresAt := time.Now().Add(3600 * time.Second)
 			cookie := http.Cookie{
 				Name:     "jwt",
-				Value:    valor,
+				Value:    strconv.Itoa(int(index)),
 				Expires:  expiresAt,
 				SameSite: http.SameSiteNoneMode,
 				Secure:   true,

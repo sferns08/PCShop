@@ -10,6 +10,7 @@ export const useUsuarios = () =>{
         Nombre: data.get("Nombre"),
         Apellido: data.get("Apellidos"),
         Direccion: data.get("Direccion"),
+        Dni: data.get("Dni"),
         Fecha_nac: fecha,
         Telefono: data.get("Telefono"),
         Email: data.get("Email"),

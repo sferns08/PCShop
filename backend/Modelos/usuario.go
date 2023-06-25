@@ -14,6 +14,8 @@ type Usuario struct {
 	Telefono  string
 	Email     string
 	Password  string
+	Dni       string
+	Tipo      string
 }
 
 // Inserta un cliente en la bdd y devuelve si se registra o ya existe
@@ -28,29 +30,31 @@ func (u *Usuario) InsertarUsuario() (string, error) {
 
 	// En caso de que no exista en la bdd lo añadimos
 	var respuesta string
-	if u.ExisteUsuario() == 0 {
+	if u.ExisteEmail() == 0 && u.ExisteDni() == 0 {
 
-		stmt, err := db.Prepare("INSERT INTO Usuario (Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac, Password) VALUES (?, ?, ?, ?, ?, ?, ?)")
+		stmt, err := db.Prepare("INSERT INTO Usuario (Nombre, Apellido, Direccion, Telefono, Email, Fecha_nac, Password, Dni) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
 			panic(err.Error())
 		}
 		defer stmt.Close()
 
-		_, err = stmt.Exec(u.Nombre, u.Apellido, u.Direccion, u.Telefono, u.Email, u.Fecha_nac, u.Password)
+		_, err = stmt.Exec(u.Nombre, u.Apellido, u.Direccion, u.Telefono, u.Email, u.Fecha_nac, u.Password, u.Dni)
 		if err != nil {
 			panic(err.Error())
 		}
 
 		respuesta = "Usuario registrado con éxito: " + u.Email
+	} else if u.ExisteEmail() != 0 {
+		respuesta = "[Error] Usuario no registrado, ese Email ya existe."
 	} else {
-		respuesta = "Ese email ya existe."
+		respuesta = "[Error] Usuario no registrado, ese Dni ya existe."
 	}
 
 	return respuesta, nil
 }
 
-// Si existe el usuario devuelve 1, sino 0
-func (u *Usuario) ExisteUsuario() int {
+// Si existe el email devuelve 1, sino 0
+func (u *Usuario) ExisteEmail() int {
 
 	// Establecemos conexión con la base de datos
 	db, err := sql.Open("mysql", "root:admin@/pcshop")
@@ -62,6 +66,26 @@ func (u *Usuario) ExisteUsuario() int {
 	// Buscamos si el usuario existe en la base de datos por su email
 	count := 0
 	err = db.QueryRow("SELECT COUNT(*) FROM Usuario WHERE Email = ?", u.Email).Scan(&count)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	return count
+}
+
+// Si existe el email devuelve 1, sino 0
+func (u *Usuario) ExisteDni() int {
+
+	// Establecemos conexión con la base de datos
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+
+	// Buscamos si el usuario existe en la base de datos por su email
+	count := 0
+	err = db.QueryRow("SELECT COUNT(*) FROM Usuario WHERE Dni = ?", u.Dni).Scan(&count)
 	if err != nil {
 		panic(err.Error())
 	}

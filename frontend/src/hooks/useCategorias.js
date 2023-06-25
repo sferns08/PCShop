@@ -5,7 +5,7 @@ export const useProductos = () =>{
     const [productos, setProductos] = useState([]);
 
     const addProducto = async (data) => {
-        axios.post("http://127.0.0.1:8080/products/",{
+        axios.post("http://127.0.0.1:8080/productos/",{
             IdCategoria: data.get('categoria'),
             Nombre: data.get('nombre'),
             Precio: data.get('precio'),
@@ -26,7 +26,7 @@ export const useProductos = () =>{
     // Obtiene los productos de la categoria indicada 
     const getProductos = async (idCategoria) => {
         try {
-            const response = await axios.get(`http://127.0.0.1:8080/inicio/${idCategoria}`, {
+            const response = await axios.get(`http://127.0.0.1:8080/productos/${idCategoria}`, {
                 withCredentials: true,
             });
 
@@ -43,7 +43,7 @@ export const useProductos = () =>{
     const deleteProducto = async (indice) => {
         console.log(indice);
         try {
-            const response = await axios.delete(`http://127.0.0.1:8080/products/${indice}`,{});
+            const response = await axios.delete(`http://127.0.0.1:8080/productos/${indice}`,{});
             console.log(response.data);
             const updatedProductos = productos.filter(
                 (product) => product.IdProducto !== indice

@@ -62,48 +62,25 @@ function Registro() {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="Nombre"
-                  required
-                  fullWidth
-                  label="Nombre"
-                  autoFocus
-                />
+                <TextField autoComplete="given-name" name="Nombre" required fullWidth label="Nombre" autoFocus/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  label="Apellidos"
-                  name="Apellidos"
-                  autoComplete="family-name"
-                />
+                <TextField required fullWidth label="Apellidos" name="Apellidos" autoComplete="family-name"/>
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth label="Email" name="Email" autoComplete="email" />
+                <TextField required fullWidth label="Dni" name="Dni"/>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="Password"
-                  label="Password"
-                  type="password"
-                  autoComplete="new-password"
-                />
+                <TextField required fullWidth label="Email" name="Email" autoComplete="email"/>
               </Grid>
               <Grid item xs={12}>
-                <TextField required fullWidth name="Direccion" label="Dirección" />
+                <TextField required fullWidth name="Password" label="Password" type="password" autoComplete="new-password"/>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField required fullWidth name="Direccion" label="Dirección"/>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
-                  name="Telefono"
-                  required
-                  fullWidth
-                  label="Número teléfono"
-                  autoFocus
-                />
+                <TextField name="Telefono" required fullWidth label="Número teléfono" autoFocus/>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

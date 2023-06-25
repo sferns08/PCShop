@@ -24,7 +24,9 @@ export default function Productos() {
   const [titulo, setTitulo] = useState([]);
   
   useEffect(() => {
-    if (id === "1") {
+    if (id === "0") {
+      setTitulo("PC-Shop");
+    } else if (id === "1") {
       setTitulo("Smartphones");
     } else if (id === "2") {
       setTitulo("Perifericos");

@@ -13,7 +13,7 @@ export const IniciarSesion = async(data, navigate) => {
   ).then((response) => {
     console.log(response.data);
     document.cookie = response.data;
-    navigate("/Inicio");
+    navigate("/Productos/0");
   }).catch((error) => {
     alert(
       `Datos de inicio de sesión incorrectos\nUsuario: ${data.get(
