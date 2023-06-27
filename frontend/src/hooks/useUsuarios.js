@@ -26,20 +26,23 @@ export const useUsuarios = () =>{
       });
     }
 
-    const getUsuario = async () => {
-        try {
-        const response = await axios.get("http://127.0.0.1:8080/users/", {
-            withCredentials: true,
-        });
-        console.log("Informacion de la respuesta", response.data);
-        if (response.data != null) {
-            setUsuarios(response.data);
-        }
-        console.log(usuarios);
-        } catch (error) {
-        console.log(error);
-        }
-    };
+  const getUsuario = async () => {
+    try {
+      const jwt = document.cookie.split('; ').find(row => row.startsWith('jwt')).split('=')[1];
+      const response = await axios.get(`http://127.0.0.1:8080/usuarios/0`, {
+        withCredentials: true,
+      });
+      console.log("Los usuarios: ",response.data);
+      if (response.data != null) {
+        const respuesta = response.data;
+        const encontrado = respuesta.find(usuario => usuario.IdUsuario === parseInt(jwt));
+        setUsuarios(encontrado);
+      }
+      console.log("El usuario: ",jwt," es: ",usuarios);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
     return {
       usuarios,

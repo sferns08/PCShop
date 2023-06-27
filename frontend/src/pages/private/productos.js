@@ -44,6 +44,11 @@ export default function Productos() {
     deleteProducto(id);
   };
 
+  function handleCompra(idProducto){
+    const url = `/pedido/${idProducto}`
+    navigate(url);
+  }
+
   function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
@@ -71,7 +76,7 @@ export default function Productos() {
                   <Typography gutterBottom variant="h5" component="div">{product.Nombre}</Typography>
                   <Typography variant="h4" color="red">{product.Precio} €</Typography>
                 </CardContent>
-                <Button href="/pago" type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Comprar</Button>
+                <Button onClick={()=>handleCompra(product.IdProducto)} type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Comprar</Button>
                 {cookie === "1" && <Typography variant="h4">Stock:{product.Stock}</Typography>}
                 {cookie === "1" && <Button type="submit" onClick={()=>handleDelete(product.IdProducto)} 
                   fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>Eliminar</Button>}

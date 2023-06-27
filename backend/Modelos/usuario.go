@@ -111,3 +111,64 @@ func (u *Usuario) LogearUsuario() int32 {
 	}
 	return index
 }
+
+// Obtiene los usuarios del id indicado, si es 0 devuelve todos
+func (u *Usuario) GetUsuarios() (result []Usuario) {
+	// Conectamos con la base de datos
+	db, err := sql.Open("mysql", "root:admin@/pcshop")
+	if err != nil {
+		panic(err.Error())
+	}
+	defer db.Close()
+	var rows *sql.Rows
+	if u.IdUsuario == 0 {
+		rows, err = db.Query("SELECT * FROM usuario")
+	} else {
+		rows, err = db.Query("SELECT * FROM usuario WHERE IdUsuario= ?", u.IdUsuario)
+	}
+	if err != nil {
+		panic(err.Error())
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var c1 int
+		var c2 string
+		var c3 string
+		var c4 string
+		var c5 string
+		var c6 string
+		var c7 string
+		var c8 string
+		var c9 string
+		var c10 string
+
+		err = rows.Scan(&c1, &c2, &c3, &c4, &c5, &c6, &c7, &c8, &c9, &c10)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		fecha, err := time.Parse("2006-01-02", c5)
+		if err != nil {
+			panic(err.Error())
+		}
+
+		var usuario = Usuario{
+			IdUsuario: c1,
+			Nombre:    c2,
+			Apellido:  c3,
+			Direccion: c4,
+			Fecha_nac: fecha,
+			Telefono:  c6,
+			Email:     c7,
+			Password:  c8,
+			Dni:       c9,
+			Tipo:      c10,
+		}
+		result = append(result, usuario)
+	}
+	if err = rows.Err(); err != nil {
+		panic(err.Error())
+	}
+	return result
+}

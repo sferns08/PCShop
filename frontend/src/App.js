@@ -3,10 +3,11 @@ import { BrowserRouter as Router, Navigate, Routes, Route} from 'react-router-do
 import InicioSesion from './pages/public/inicioSesion';
 import Registro from './pages/public/registro';
 import Productos from './pages/private/productos';
-import Pago from './pages/private/pago';
+import Pago from './pages/private/pedido';
 import PagoRealizado from './pages/private/pagoRealizado';
 import NuevoProducto from './pages/private/nuevoProducto';
 import RutaProtegida from './RutaProtegida';
+import Historial from './pages/private/historial';
 
 function App() {
   return (
@@ -18,8 +19,9 @@ function App() {
         <Route element={<RutaProtegida />}>
           <Route path='/productos/:id' element={<Productos />}></Route>
           <Route path='/nuevoProducto' element={<NuevoProducto />}></Route>
-          <Route path='/pago' element={<Pago />}></Route>
-          <Route path='/pagoRealizado' element={<PagoRealizado />}></Route>
+          <Route path='/pedido/:idProducto' element={<Pago />}></Route>
+          <Route path='/pagoRealizado/:idPedido' element={<PagoRealizado />}></Route>
+          <Route path='/historial' element={<Historial />}></Route>
         </Route>
       </Routes>
     </Router>

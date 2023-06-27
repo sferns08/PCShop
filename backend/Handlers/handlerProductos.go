@@ -29,7 +29,6 @@ func HandlerProductos(w http.ResponseWriter, r *http.Request) {
 		// Leer el cuerpo del mensaje
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
-			log.Println("[Error Servidor] Error al leer el cuerpo del mensaje (Función -- handlerProductos(POST))")
 			http.Error(w, "[Error Servidor] Error al leer el cuerpo del mensaje (Función -- handlerProductos(POST))", http.StatusBadRequest)
 			return
 		}
@@ -38,14 +37,12 @@ func HandlerProductos(w http.ResponseWriter, r *http.Request) {
 		var producto modelos.Producto
 		err = json.Unmarshal(body, &producto)
 		if err != nil {
-			log.Println("[Error Servidor] Error al parsear el cuerpo del mensaje (Función -- handlerProductos(POST))")
 			http.Error(w, "[Error Servidor] Error al parsear el cuerpo del mensaje (Función -- handlerProductos(POST))", http.StatusBadRequest)
 			return
 		}
 
 		data, err := producto.InsertarProducto()
 		if err != nil {
-			log.Println("[Error Servidor] Error al insertar el producto en la base de datos (Función -- handlerProductos(POST))")
 			http.Error(w, "[Error Servidor] Error al insertar el producto en la base de datos (Función -- handlerProductos(POST))", http.StatusBadRequest)
 			return
 		}

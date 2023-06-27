@@ -18,14 +18,15 @@ export default function MenuSuperior() {
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
   const cookie = getCookie('jwt');
+  
   return (
     <BottomNavigation showLabels value={value} onChange={(event, newValue) => { setValue(newValue);}}>
-      <BottomNavigationAction href="/productos/0" label="Inicio" value="Inicio" icon={<HomeIcon />} />
+      <BottomNavigationAction href="/productos/0" label="Inicio" icon={<HomeIcon />} />
       <BottomNavigationAction href="/productos/1" label="Smartphones" icon={<SmartphoneIcon />} />
       <BottomNavigationAction href="/productos/2" label="Perifericos" icon={<MouseIcon />} />
       <BottomNavigationAction href="/productos/3" label="Ordenadores" icon={<ComputerIcon />} />
       <BottomNavigationAction href="/productos/4" label="TV" icon={<LiveTvIcon />} />
-      <BottomNavigationAction href="/productos/4" label="Mis Pedidos" icon={<LocalShippingIcon />} />
+      <BottomNavigationAction href="/historial" label="Mis Pedidos" icon={<LocalShippingIcon />} />
       {cookie === "1" && <BottomNavigationAction href="/nuevoProducto" label="Subir producto" icon={<AddIcon />} />}
     </BottomNavigation>
   );

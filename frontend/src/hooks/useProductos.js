@@ -5,13 +5,7 @@ export const useProductos = () =>{
     const [productos, setProductos] = useState([]);
 
     const addProducto = async (data) => {
-        console.log("Insertando: ",
-            "IdCategoria: ",data.get('categoria'),
-            "Nombre: ",data.get('nombre'),
-            "Precio: ",data.get('precio'),
-            "Stock: ",data.get('stock'),
-            "Imagen: ", data.get('imagen')
-        );
+
         axios.post("http://127.0.0.1:8080/productos/",{
             IdCategoria: parseInt(data.get('categoria')),
             Nombre: data.get('nombre'),
@@ -38,7 +32,6 @@ export const useProductos = () =>{
             });
 
             // Si todo va bien
-            console.log("Informacion de la respuesta: ", response.data);
             if (response.data != null) {
                 setProductos(response.data);
             }
@@ -46,7 +39,24 @@ export const useProductos = () =>{
             console.log(error);
         }
     };
-  
+
+    // Obtiene el producto con el id indicado
+    const getProducto = async (id) => {
+        try {
+            const response = await axios.get(`http://127.0.0.1:8080/productos/0`, {
+                withCredentials: true,
+            });
+            // Si todo va bien
+            if (response.data != null) {
+                const respuesta = response.data;
+                const productoEncontrado = respuesta.find(producto => producto.IdProducto === id);
+                setProductos(productoEncontrado);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
     const deleteProducto = async (indice) => {
         console.log(indice);
         try {
@@ -65,7 +75,8 @@ export const useProductos = () =>{
       productos,
       addProducto,
       deleteProducto,
-      getProductos
+      getProductos,
+      getProducto
     }
   
 }

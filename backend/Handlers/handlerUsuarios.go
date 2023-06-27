@@ -4,14 +4,17 @@ import (
 	modelos "backend/Modelos"
 	"encoding/json"
 	"io"
+	"log"
 	"net/http"
+	"strconv"
 )
 
 // ######### REGISTRO #########
 func HandlerUsuarios(w http.ResponseWriter, r *http.Request) {
 
 	// El POST inserta un cliente en la bdd y devuelve si se registra o no
-	if r.Method == "POST" {
+	switch r.Method {
+	case "POST":
 
 		// Leer el cuerpo del mensaje
 		body, err := io.ReadAll(r.Body)
@@ -37,5 +40,18 @@ func HandlerUsuarios(w http.ResponseWriter, r *http.Request) {
 		// Respuesta del servidor
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(data))
+	case "GET":
+
+		valorNumerico := r.URL.Path[len("/usuarios/"):]
+		id, _ := strconv.Atoi(valorNumerico)
+
+		var usuario modelos.Usuario
+		usuario.IdUsuario = id
+		res := usuario.GetUsuarios()
+		data, err := json.Marshal(res)
+		if err != nil {
+			log.Println("[Error Servidor] Fallo al crear el json (Función -- handlerFactura(GET))")
+		}
+		w.Write(data)
 	}
 }

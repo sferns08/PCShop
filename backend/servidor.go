@@ -19,10 +19,12 @@ func main() {
 	mux.HandleFunc("/usuarios/", manejadoras.HandlerUsuarios)
 	mux.HandleFunc("/inicioSesion/", manejadoras.HandlerInicioSesion)
 	mux.HandleFunc("/productos/", manejadoras.HandlerProductos)
+	mux.HandleFunc("/pedido/", manejadoras.HandlerPedido)
+	mux.HandleFunc("/factura/", manejadoras.HandlerFactura)
 
 	//Habilitamos las cors
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"http://localhost:3000", "http://localhost:8080"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"Content-Type", "Authorization", "Custom-Header", "Cookie", "categoria"},
 		AllowCredentials: true,

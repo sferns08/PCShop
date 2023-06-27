@@ -38,7 +38,7 @@ func HandlerInicioSesion(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Si está bien loggeado
-		var data string
+		var data string = "0"
 		if index > 0 {
 			//Se crea la cookie y se almacena
 			expiresAt := time.Now().Add(3600 * time.Second)
@@ -50,10 +50,8 @@ func HandlerInicioSesion(w http.ResponseWriter, r *http.Request) {
 				Secure:   true,
 				HttpOnly: false,
 			}
-			data = cookie.String()
 			http.SetCookie(w, &cookie)
-		} else {
-			data = "0"
+			data = cookie.String()
 		}
 
 		// Respuesta del servidor
