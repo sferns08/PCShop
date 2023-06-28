@@ -32,7 +32,6 @@ export const usePedido= () =>{
             withCredentials: true,
         });
         // Si todo va bien
-        console.log("Los pedidos: ",response.data);
         if (response.data != null) {
             const respuesta = response.data;
             const pedidoEncontrado = respuesta.find(pedido => pedido.IdPedido === id);
@@ -43,15 +42,15 @@ export const usePedido= () =>{
     }
 };
 
+
 const getPedidos = async () => {
   try {
       const response = await axios.get(`http://127.0.0.1:8080/pedido/0`, {
           withCredentials: true,
       });
       // Si todo va bien
-      console.log("Los pedidos: ",response.data);
-      if (response.data != null) {
-          setPedidos(response.data);
+      if (response.data != null) { 
+        setPedidos(response.data);
       }
   } catch (error) {
       console.log(error);

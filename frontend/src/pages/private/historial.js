@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AppBar,
   Toolbar,
@@ -11,6 +11,7 @@ import {
   CardMedia,
   Button,
   Box,
+  Fab,
 } from "@mui/material";
 import MenuSuperior from "../../components/menuSuperior";
 import { useProductos } from "../../hooks/useProductos";
@@ -19,14 +20,39 @@ import { usePedido } from "../../hooks/usePedido";
 import { useUsuarios } from '../../hooks/useUsuarios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useFactura } from '../../hooks/useFactura';
+import Pedido from './pedido';
 
 export default function Historial() {
     const {pedidos,getPedidos} = usePedido();
+    const {facturas, getFacturas} = useFactura();
     const navigate = useNavigate();
+    const [filtroFacturas, setFiltroFac] = useState([]);
+    const [filtroPedidos, setFiltroPed] = useState([]);
   
     useEffect(() => {
       getPedidos();
+      getFacturas();      
     }, []);
+
+    const jwt = document.cookie.split('; ').find(row => row.startsWith('jwt')).split('=')[1];
+
+    useEffect(() => {
+      if(facturas.length > 0){
+        if(jwt != "1"){
+          const filteredData = facturas.filter(factura => factura.IdFactura === jwt);
+          setFiltroFac(filteredData);
+        }else if(pedidos.length > 0){
+          setFiltroPed(pedidos);
+        }
+      }
+    }, [facturas, pedidos]);
+
+    useEffect(()=>{
+      if(filtroFacturas.length > 0){
+        const filteredData = pedidos.filter(pedido => filtroFacturas.some(factura => factura.IdFactura === pedido.IdFactura));
+        setFiltroPed(filteredData);
+      }
+    },[filtroFacturas]);
 
   return (
     <Box>
@@ -40,7 +66,7 @@ export default function Historial() {
 
       <Container sx={{ marginTop: "2rem" }}>
         <Grid container spacing={1}>
-          {pedidos.map((pedido, index) => (
+          {filtroPedidos.map((pedido, index) => (
             <Grid item key={index} xs={12}>
               <Card><CardActionArea href={"/pagoRealizado/"+pedido.IdPedido}>
                 <CardContent>

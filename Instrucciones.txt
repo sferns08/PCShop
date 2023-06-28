@@ -1,3 +1,4 @@
+Daniel FLorez Recio y Sergio Fernandez Santos
 - Crear la base de datos con usuario: root y contraseña: admin a partir del archivo "PCShopBBDD.sql"
 - Tener instalado go-lang: https://go.dev/doc/install
 - Tener instalada la ultima version estable de nodejs: https://nodejs.org/es
